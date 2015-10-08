@@ -69,6 +69,7 @@ class Move(DateTimeObject):
         self.id = bundle['id']
         self.accuracy = bundle['accuracy']
         self.category = bundle['category']
+        self.description = bundle['description']
         self.power = bundle['power']
         self.pp = bundle['pp']
 
