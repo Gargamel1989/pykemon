@@ -86,6 +86,7 @@ class Type(DateTimeObject):
         self.id = bundle['id']
         self.name = bundle['name']
         self.ineffective = buildr(bundle, 'ineffective')
+        self.no_effect = buildr(bundle, 'no_effect')
         self.resistance = buildr(bundle, 'resistance')
         self.super_effective = buildr(bundle, 'super_effective')
         self.weakness = buildr(bundle, 'weakness')
