@@ -66,12 +66,17 @@ class TestPykemon(unittest.TestCase):
         self.assertIn('Monster', self.poke_one.egg_groups)
         self.assertIn('bulbasaur_gen_1', self.poke_one.descriptions)
         self.assertIn('bulbasaur', self.poke_one.sprites)
+        
 
     def test_type_complex_attribs(self):
         self.assertIn('grass', self.type_one.super_effective)
         self.assertIn('water', self.type_one.weakness)
         self.assertIn('fire', self.type_one.ineffective)
         self.assertNotIn('Test', self.type_one.resistance)
+        
+    def test_type_no_effect(self):
+        type_fighting = pykemon.get(type_id=2)
+        self.assertIn('ghost', type_fighting.no_effect)
 
     def test_egg_complex_attribs(self):
         self.assertIn('Blastoise', self.egg_one.pokemon)
