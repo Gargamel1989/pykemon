@@ -59,7 +59,6 @@ class TestPykemon(unittest.TestCase):
         self.assertEquals(self.game_one.resource_uri, '/api/v1/game/4/')
 
     def test_pokemon_complex_attribs(self):
-        self.assertIn('Ivysaur', self.poke_one.evolutions)
         self.assertIn('grass', self.poke_one.types)
         self.assertIn('overgrow', self.poke_one.abilities)
         self.assertIn('Monster', self.poke_one.egg_groups)
@@ -73,6 +72,19 @@ class TestPykemon(unittest.TestCase):
         vw_move = next(move for move in self.poke_one.moves if  move.name == 'Vine-whip')
         self.assertEqual(vw_move.learn_type, 'level up')
         self.assertEqual(vw_move.level, 13)
+        
+    def test_pokemon_evolutions_attrib(self):
+        self.assertEqual(len(self.poke_one.evolutions), 1)
+        evo = self.poke_one.evolutions[0]
+        self.assertEqual(evo.level, 16)
+        self.assertEqual(evo.method, 'level_up')
+        self.assertEqual(evo.resource_uri, '/api/v1/pokemon/2/')
+        self.assertEqual(evo.to, 'Ivysaur')
+        
+        eevee = pykemon.get(pokemon='eevee')
+        leafeon_evo = next(evo for evo in eevee.evolutions if evo.to == 'Leafeon')
+        self.assertEqual(leafeon_evo.method, 'other')
+        self.assertEqual(leafeon_evo.level, None)
         
 
     def test_type_complex_attribs(self):

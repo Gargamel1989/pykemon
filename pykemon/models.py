@@ -25,7 +25,13 @@ class Pokemon(DateTimeObject):
     """
     This class represents a single Pokemon resource
     """
-    
+    class EvolutionProperties(object):
+        def __init__(self, bundle):
+            self.level = bundle.get('level', None)
+            self.method = bundle['method']
+            self.resource_uri = bundle['resource_uri']
+            self.to = bundle['to']
+            
     class Move(object):
         def __init__(self, bundle):
             self.learn_type = bundle['learn_type']
@@ -38,8 +44,7 @@ class Pokemon(DateTimeObject):
         self.id = bundle['national_id']
         self.abilities = buildr(bundle, 'abilities')
         self.egg_groups = buildr(bundle, 'egg_groups')
-        self.evolutions = {
-            f['to']: f['resource_uri'] for f in bundle['evolutions']}
+        self.evolutions = [self.EvolutionProperties(evo_bundle) for evo_bundle in bundle.get('evolutions', [])]
         self.descriptions = buildr(bundle, 'descriptions')
         self.moves = [self.Move(move_bundle) for move_bundle in bundle.get('moves', [])]
         self.types = buildr(bundle, 'types')
