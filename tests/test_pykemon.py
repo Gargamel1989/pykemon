@@ -60,12 +60,19 @@ class TestPykemon(unittest.TestCase):
 
     def test_pokemon_complex_attribs(self):
         self.assertIn('Ivysaur', self.poke_one.evolutions)
-        self.assertIn('Cut', self.poke_one.moves)
         self.assertIn('grass', self.poke_one.types)
         self.assertIn('overgrow', self.poke_one.abilities)
         self.assertIn('Monster', self.poke_one.egg_groups)
         self.assertIn('bulbasaur_gen_1', self.poke_one.descriptions)
         self.assertIn('bulbasaur', self.poke_one.sprites)
+        
+    def test_pokemon_move_attrib(self):
+        bind_move = next(move for move in self.poke_one.moves if move.name == 'Bind')
+        self.assertEqual(bind_move.learn_type, 'tutor')
+        self.assertEqual(bind_move.level, None)
+        vw_move = next(move for move in self.poke_one.moves if  move.name == 'Vine-whip')
+        self.assertEqual(vw_move.learn_type, 'level up')
+        self.assertEqual(vw_move.level, 13)
         
 
     def test_type_complex_attribs(self):
